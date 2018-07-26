@@ -1,0 +1,72 @@
+html,body,div,p,ul,li,dl,dt,dd,em,i,span,a,img,input,h1,h2,h3,h4,h5 {margin:0;padding:0}
+a,img,input {border:none;}
+body{font: 14px/1.75  -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;-webkit-tap-highlight-color: rgba(0,0,0,0);}
+a {text-decoration:none;}
+ul,li{list-style: none}
+a, img {-webkit-touch-callout: none; /* 禁止长按链接与图片弹出菜单 */}
+html, body {
+    -webkit-user-select: none;   /* 禁止选中文本（如无文本选中需求，此为必选项） */
+    user-select: none;
+    font-family: '微软雅黑';
+}
+html{font-size:100px;
+    text-align: center;
+    font-size: 0.24rem;
+    min-width: 2rem;
+    display: inline-block;
+    position: relative;
+}
+.loading{
+    width: 100%; height: 100%;
+    position: fixed;
+    top: 0;left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.4);
+    visibility: hidden;
+}
+.loading .icon{
+    background-color: rgba(245, 245, 245, 0.4);
+    border-radius: 0.1rem;
+    width: 1.24rem;
+    height: 1.24rem;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url(../images/loading.png);
+    background-position-y: -1.22rem;
+    animation:run 0.3s steps(1, start) infinite;
+}
+@keyframes run{
+    9%{
+        background-position-y: -1.22rem 
+    }
+    18%{
+        background-position-y: -2.44rem 
+    }
+    27%{
+        background-position-y: -3.66rem 
+    }
+    36%{
+        background-position-y: -4.88rem 
+    }
+    45%{
+        background-position-y: -6.10rem 
+    }
+    54%{
+        background-position-y: -7.32rem 
+    }
+    63%{
+        background-position-y: -8.54rem 
+    }
+    72%{
+        background-position-y: -9.76rem 
+    }
+    81%{
+        background-position-y: -10.98rem 
+    }
+    90%{
+       /* background-position-y: -11.98rem  */
+    }
+
+}

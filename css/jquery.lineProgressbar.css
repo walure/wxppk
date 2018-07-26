@@ -1,0 +1,127 @@
+.progressbar {
+    width: 100%;
+	margin-top: 5px;
+	margin-bottom: 20px;
+	position: relative;
+	background-color: #EEEEEE;
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,.1);
+}
+
+.proggress{
+	height: 8px;
+	width: 10px;
+	background-color: #3498db;
+}
+
+.percentCount{
+	/*float:right;
+	margin-top: 10px;*/
+	position: absolute;
+	right: 0%;
+	top: -100%;
+	clear: both;
+	font-weight: bold;
+	font-family: Arial;
+	color: #333;
+}
+.htmleaf-content {
+	width: 80%;
+	margin: 10px auto;
+}
+
+
+/*.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}*/
+
+.progressbar {
+	padding: 2px;
+}
+
+.shade_box {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left:0;
+	top:0;
+	overflow: hidden;
+	
+	
+}
+.shade_box:before {
+	content: " ";
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255,255,255,1);
+	z-index: -1;
+}
+.shade{
+	max-width: 768px;
+	margin: 0 auto;
+}
+.shade>p {
+	text-align: center;
+}
+.shade_err {
+	width: 100%;
+	margin-bottom: 30px;
+}
+.shade_err p{
+	position: relative;
+	width: 90%;
+	padding: 2% 5%;
+	margin: 0 auto;
+	border: 1px solid #CCC;
+	background-color: #EEE;
+	color: #F00;
+	border-radius: 15px;
+	line-height: 1.8em;
+	/*font-size: 0.8em;*/
+	text-indent: 2.0em;
+	box-sizing: border-box;
+}
+.shade_err p:after {
+	display: block;
+	content: " ";
+    width: 0;
+    height: 0;
+    border-top: 20px solid #EEE;
+    border-right: 20px solid transparent;
+	position: absolute;
+	left:50px;
+	bottom: -20px;
+}
+@media screen and ( min-width: 768px ){
+.percentCount{
+	position: absolute;
+	right: 0%;
+	top: -150%;
+}
+.shade_err {
+	width: 100%;
+	margin-bottom: 70px;
+}
+.shade_err p:after {
+	display: block;
+	content: " ";
+    width: 0;
+    height: 0;
+    border-top: 50px solid #EEE;
+    border-right: 50px solid transparent;
+	position: absolute;
+	left:50px;
+	bottom: -50px;
+}
+}
+

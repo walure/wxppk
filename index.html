@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>海南拍拍看信息技术有限公司</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+
+    <script src="js/resize.js"></script>
+    <style>
+        body {
+            text-align: center
+        }
+
+        .logo .m1 {
+            margin-top: 1rem;
+            width: 3rem;
+        }
+
+        .logo .m2 {
+            width: 3rem;
+            border: 1px solid #4A90E2;
+            margin-top: 0.35rem;
+        }
+
+        .desc {
+            font-size: 0.16rem;
+            color: #A1A1A1;
+            margin-top: 0.9rem;
+        }
+
+        .nav {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .nav .nav_bg {
+            width: 100%;
+            display: block;
+        }
+
+        .input_box {
+            position: absolute;
+            z-index: 1;
+            width: 2rem;
+            left: 50%;
+            margin-left: -1rem;
+            top: 0.5rem;
+        }
+
+        .input_box img {
+            width: 100%;
+        }
+
+        .input_box input {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .sm_btn {
+            display: inline-block;
+            width: auto;
+            padding-left: 5%;
+            padding-right: 5%;
+            border: 1px solid #CCC;
+            letter-spacing: 0.2em;
+            background-color: transparent;
+            color: #333;
+            height: 0.8rem;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.0em;
+
+            box-sizing: border-box;
+            cursor: pointer;
+            margin: 0.5rem auto;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="logo">
+        <div>
+            <img class="m1" src="images/logo.png">
+        </div>
+        <div>
+            <img class="m2" src="images/ewm.png">
+        </div>
+    </div>
+    <div class="desc">
+        锯齿防伪 无为而治
+        <br> 引领防伪技术进入“不可复制”时代！
+    </div>
+    <div class="nav">
+        <img class="nav_bg" src="images/nav_bg.png">
+        <div class="input_box">
+            <input type="file" id="toCamera" />
+            <img src="images/scan.png">
+        </div>
+    </div>
+
+
+
+    <div class="loading" id="loading">
+        <div class="icon"></div>
+        
+    </div>
+
+
+</body>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script>
+    function compress(img, width, height, ratio) { // img可以是dataURL或者图片url
+        var canvas, ctx, img64;
+
+        canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        console.log(canvas)
+        ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+
+        img64 = canvas.toDataURL("image/jpeg", ratio);
+        return img64; // 压缩后的base64串
+    }
+    function readFile(file,callback){
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        
+        reader.onloadend = function (e) {
+            var dataURL = reader.result;
+            var imaged = new Image();
+            imaged.src = dataURL;
+            imaged.onload = function () {
+                var img64 = compress(this, 480, 640, 0.7);
+                callback(img64)
+                
+            }
+        }
+    }
+    $('#toCamera').change(function(e){
+        var file = e.target.files[0];
+        var type = file.type.split('/')[0];
+        if (type != 'image') {
+            alert('请上传图片');
+            return;
+        }
+
+        readFile(file,function(img){
+            $('#loading').css('visibility','visible');
+            $.ajax({
+                    type: "post",
+                    url: "http://demo.315net.com/api/check",
+                    data: {
+                        type:'base64',
+                        scanImage:img
+                    },
+                    dataType: "json",
+                    success: function(data){
+                           console.log(data) 
+                           setTimeout(function(){
+                            $('#loading').css('visibility','hidden');
+                           // location.href = 'result.html'
+                           },3000)
+                    },
+                    error:function(){
+                        
+                    }
+                });
+        })
+        
+
+     
+    })
+    
+    
+</script>
+
+</html>

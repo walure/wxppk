@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查询结果</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+    <link href="css/result.css" rel="stylesheet" type="text/css">
+
+    <script src="js/resize.js"></script>
+    
+</head>
+
+<body>
+    <div class="success">
+        <div class="product-box">
+
+            <img class="product-img" src="images/lazy.png">
+            <div>五粮液52度普五 2015年老酒 500ml</div>
+        </div>
+
+        <!--  二维码对比  -->
+        <div class="ewm-box">
+            <div class="item">
+                <div class="title">您上传的图片</div>
+                <img src="images/lazy.png">
+            </div>
+            <div class="item">
+                <div class="title">数据存档图片</div>
+                <img src="images/lazy.png">
+            </div>
+            <div class="item-center">
+                <img src="images/result.png">
+                <div>VS</div>
+            </div>
+        </div>
+
+        <!-- 查验结果  -->
+        <div class="cyjg-box">
+            <div class="title">查验结果:</div>
+            <div class="btn-icon">
+                <div>真品</div>
+            </div>
+            <div class="big">100%</div>
+            <div class="gray">真品率</div>
+        </div>
+
+        <!-- 产品信息  -->
+        <div class="product-info">
+            <div>产品代码：161700002059691176</div>
+            <div>公司名称：山东鲁信天一印务有限公司</div>
+        </div>
+
+        <!-- 查询历史  -->
+        <div class="history-num">
+            <div>查询次数：2</div>
+            <div>首次查询：2018-05-16 14:32:26</div>
+        </div>
+    </div>
+
+
+    <div class="fail">
+        <div class="desc">
+                <p>很抱歉，未找到相应结果！</p>
+
+                建议您：重新拍照上传，确定拍照框对准二维码且保持8-15cm左右的距离。
+        </div>
+
+        <div class="ewm">
+            <img src="images/lazy.png">
+        </div>
+        <div class="tips">
+                您拍照上传的二维码内容
+                可能不完整或过于模糊
+        </div>
+
+    </div>
+
+
+    <!-- footbar -->
+    <div class="foot-bar">
+        <div>
+            <img  src="images/logo-text.png">
+        </div>
+        <div><a href="index.html">继续拍照</a></div>
+    </div>
+
+
+
+    <div class="loading">
+        <div class="icon"></div>
+    </div>
+
+
+</body>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/jquery.lineProgressbar.js"></script>
+
+</html>
