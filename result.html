@@ -14,22 +14,24 @@
 </head>
 
 <body>
-    <div class="success">
+    <div class="success" style="display: none">
         <div class="product-box">
 
-            <img class="product-img" src="images/lazy.png">
-            <div>五粮液52度普五 2015年老酒 500ml</div>
+            <img class="product-img" id="productImg" src="images/lazy.png">
+            <div id="product">五粮液52度普五 2015年老酒 500ml</div>
         </div>
 
         <!--  二维码对比  -->
         <div class="ewm-box">
             <div class="item">
                 <div class="title">您上传的图片</div>
-                <img src="images/lazy.png">
+               <!-- <img src="images/lazy.png" id="uploadScanUrl"> -->
+                 <div id="uploadScanUrl" class="pic_bg" ></div>
             </div>
             <div class="item">
                 <div class="title">数据存档图片</div>
-                <img src="images/lazy.png">
+                <!-- <img src="images/lazy.png" id="originScanUrl"> -->
+                <div id="originScanUrl" class="pic_bg" ></div>
             </div>
             <div class="item-center">
                 <img src="images/result.png">
@@ -49,19 +51,19 @@
 
         <!-- 产品信息  -->
         <div class="product-info">
-            <div>产品代码：161700002059691176</div>
-            <div>公司名称：山东鲁信天一印务有限公司</div>
+            <div>产品代码：<span id="productCode">161700002059691176</span></div>
+            <div>公司名称：<span id="companyName">山东鲁信天一印务有限公司</span></div>
         </div>
 
         <!-- 查询历史  -->
         <div class="history-num">
-            <div>查询次数：2</div>
-            <div>首次查询：2018-05-16 14:32:26</div>
+            <div>查询次数：<span id="scanCount">2</span></div>
+            <div>首次查询：<span id="firstScanTime">2018-05-16 14:32:26</span></div>
         </div>
     </div>
 
 
-    <div class="fail">
+    <div class="fail" style="display: none">
         <div class="desc">
                 <p>很抱歉，未找到相应结果！</p>
 
@@ -69,7 +71,7 @@
         </div>
 
         <div class="ewm">
-            <img src="images/lazy.png">
+            <img id="failImg" src="images/lazy.png">
         </div>
         <div class="tips">
                 您拍照上传的二维码内容
@@ -96,6 +98,40 @@
 
 </body>
 <script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/jquery.lineProgressbar.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/share.js"></script>
+<script>
+    
+ var data = JSON.parse(decodeURIComponent(getQueryString('res')));
+  if(getQueryString('resultType')==2){
+
+      $('#failImg').attr('src',data.data.uploadScanUrl)
+      $('.fail').show()
+  }else{
+    
+      $('#productImg').attr('src',data.data.productUrl);
+      $('#product').text(data.data.productName+data.data.productSpec);
+      
+     // $('#uploadScanUrl').attr('src',data.data.uploadScanUrl)
+     // $('#originScanUrl').attr('src',data.data.originScanUrl)
+      $('#uploadScanUrl').css('background-image','url('+data.data.uploadScanUrl+')')
+      $('#originScanUrl').css('background-image','url('+data.data.originScanUrl+')')
+      $('#productCode').text(data.data.productCode)
+      $('#companyName').text(data.data.companyName)
+      $('#scanCount').text(data.data.scanCount)
+      $('#firstScanTime').text(data.data.firstScanTime)
+      
+      if(data.data.resultType==1){
+        $('.btn-icon').addClass('false')
+          $('.btn-icon div').text('赝品')
+          $('.big').text('0%')
+          $('.gray').text('赝品')
+      }
+
+      $('.success').show();
+      console.log(data)
+  }
+
+</script>
 
 </html>

@@ -26,9 +26,9 @@
         }
 
         .desc {
-            font-size: 0.16rem;
+            font-size: 0.30rem;
             color: #A1A1A1;
-            margin-top: 0.9rem;
+            margin-top: 0.8rem;
         }
 
         .nav {
@@ -50,9 +50,17 @@
             margin-left: -1rem;
             top: 0.5rem;
         }
-
+        
         .input_box img {
             width: 100%;
+        }
+        .input_box .result_icon{
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            font-size: 0.28rem;
+            bottom: 0.3rem;
+            color: #fff;
         }
 
         .input_box input {
@@ -60,6 +68,7 @@
             height: 100%;
             position: absolute;
             opacity: 0;
+            z-index: 5;
         }
 
         .sm_btn {
@@ -94,6 +103,7 @@
         <div>
             <img class="m2" src="images/ewm.png">
         </div>
+        
     </div>
     <div class="desc">
         锯齿防伪 无为而治
@@ -104,6 +114,7 @@
         <div class="input_box">
             <input type="file" id="toCamera" />
             <img src="images/scan.png">
+            <div class="result_icon">拍拍看</div>
         </div>
     </div>
 
@@ -117,20 +128,56 @@
 
 </body>
 <script src="js/jquery-1.7.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/exif.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/share.js"></script>
 <script>
-    function compress(img, width, height, ratio) { // img可以是dataURL或者图片url
-        var canvas, ctx, img64;
+    function getPhotoOrientation(img) {
+        var orient;
+        EXIF.getData(img, function () {
+            orient = EXIF.getTag(this, 'Orientation');
+        });
+        return orient;
+    }
+
+    function compress(img, width, height, ratio) {
+        var canvas, ctx, img64, orient;
+    　　　 
+        //获取图片方向
+        orient = getPhotoOrientation(img);
 
         canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        console.log(canvas)
-        ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, img.width, img.height);
+        console.log(img.width,img.height)
+       
+       
+
+        //如果图片方向等于6 ，则旋转矫正，反之则不做处理
+        if (orient == 6) {
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx = canvas.getContext("2d");
+                ctx.save();
+                ctx.translate(width / 2, height / 2);
+                ctx.rotate(90 * Math.PI / 180);
+                ctx.drawImage(img, 0 - height / 2, 0 - width / 2, height, width);
+                ctx.restore();
+        } else {
+                 img.width =  img.width*0.3
+                 img.height =  img.height*0.3
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                ctx = canvas.getContext("2d");
+
+                ctx.drawImage(img, 0, 0,  img.width, img.height);
+        }
 
         img64 = canvas.toDataURL("image/jpeg", ratio);
-        return img64; // 压缩后的base64串
+        return img64;
     }
+
     function readFile(file,callback){
         var reader = new FileReader();
         reader.readAsDataURL(file);
@@ -140,7 +187,8 @@
             var imaged = new Image();
             imaged.src = dataURL;
             imaged.onload = function () {
-                var img64 = compress(this, 480, 640, 0.7);
+              //  console.log(imaged)
+                var img64 = compress(this, 480, 640, 1);
                 callback(img64)
                 
             }
@@ -161,15 +209,19 @@
                     url: "http://demo.315net.com/api/check",
                     data: {
                         type:'base64',
-                        scanImage:img
+                        scanImage:img,
+                        'machine_id': hex_md5('H5'),
                     },
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                     dataType: "json",
                     success: function(data){
-                           console.log(data) 
-                           setTimeout(function(){
+                          console.log((JSON.stringify(data))) 
+                        //   setTimeout(function(){
                             $('#loading').css('visibility','hidden');
-                           // location.href = 'result.html'
-                           },3000)
+                            localStorage.setItem('resultData',JSON.stringify(data))
+                            localStorage.setItem('resultImg',img)
+                            location.href = 'result.html?resultType='+data.data.resultType+'&res='+encodeURIComponent(JSON.stringify(data))
+                         //  },3000)
                     },
                     error:function(){
                         
@@ -180,6 +232,10 @@
 
      
     })
+
+
+
+    
     
     
 </script>
