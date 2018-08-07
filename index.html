@@ -112,7 +112,7 @@
     <div class="nav">
         <img class="nav_bg" src="images/nav_bg.png">
         <div class="input_box">
-            <input type="file" id="toCamera" />
+            <input type="file" accept="image/*" id="toCamera" />
             <img src="images/scan.png">
             <div class="result_icon">拍拍看</div>
         </div>
@@ -154,6 +154,7 @@
 
         //如果图片方向等于6 ，则旋转矫正，反之则不做处理
         if (orient == 6) {
+            alert(1)
             canvas.width = width;
             canvas.height = height;
 
@@ -188,7 +189,7 @@
             imaged.src = dataURL;
             imaged.onload = function () {
               //  console.log(imaged)
-                var img64 = compress(this, 480, 640, 1);
+                var img64 = compress(this, 480, 640, 0.9);
                 callback(img64)
                 
             }
